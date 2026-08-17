@@ -22,5 +22,6 @@
 
 - 记录经历：读取 `.agents/skills/capture-journal/SKILL.md`
 - 保存外部输入：读取 `.agents/skills/capture-input/SKILL.md`
+- 探索一个陌生输入：读取 `.agents/skills/explore-new-bubble/SKILL.md`
 - 回看最近七天：读取 `.agents/skills/review-seven-days/SKILL.md`
 - 发展持续实践：读取 `.agents/skills/develop-practice/SKILL.md`

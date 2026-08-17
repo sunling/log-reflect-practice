@@ -4,7 +4,7 @@
 
 > 生活与输入 → Daily → 回看 → Practice → 反馈
 
-仓库里没有作者的私人记录，只有结构、说明、虚构样例，以及 4 个可修改的仓库内 Skill。你可以把它用于个人记录，也可以在“从记录到实践”工作坊中跟着搭建。
+仓库里没有作者的私人记录，只有结构、说明、虚构样例，以及 5 个可修改的仓库内 Skill。你可以把它用于个人记录，也可以在“从记录到实践”工作坊中跟着搭建。
 
 ## 开始使用
 
@@ -33,12 +33,13 @@
 └── AGENTS.md
 ```
 
-## 四个示例 Skill
+## 五个示例 Skill
 
 - [capture-journal](.agents/skills/capture-journal/SKILL.md)：把一段经历整理成 journal，但不替你编造解释。
 - [capture-input](.agents/skills/capture-input/SKILL.md)：保存外部输入，同时区分原内容与你的回应。
 - [review-seven-days](.agents/skills/review-seven-days/SKILL.md)：回看最近七天，找出重复、变化和未完成之处。
 - [develop-practice](.agents/skills/develop-practice/SKILL.md)：把有证据的线索发展为可持续的小实践。
+- [explore-new-bubble](.agents/skills/explore-new-bubble/SKILL.md)：每次引入一个陌生而具体的世界输入，完成之后再留下记录。
 
 这些是**仓库内 Skill 示例**，目的是展示如何把工作方法写给 AI。它们不会自动安装成 ChatGPT 或 Codex 的全局 Skill；复制仓库后，你可以按自己的习惯直接修改。
 
