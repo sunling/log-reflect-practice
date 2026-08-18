@@ -100,7 +100,7 @@ practices/<实践名>/
 
 ## 来源
 
-- [相关 Daily](相对路径)
+- 相关 Daily：仓库相对路径
 ```
 
 `current.md` 建议结构：
