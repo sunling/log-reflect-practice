@@ -1,0 +1,1 @@
+这是突破信息茧房的定期探索任务。读取 GitHub 仓库 `sunling/sunling-os`下的`.agents/skills/bubble-breaker/SKILL.md`，执行其中的 Discovery / discover 流程。生成 1 个待我认真阅读、收听或观看的资源任务。找到并核实资源后，除了在任务结果中返回该资源任务，还使用已连接的 Gmail 将同样的任务内容发送到 sunling621@gmail.com，邮件主题使用“New Bubble｜今日陌生输入：{资源标题}”。不要提前入库；等我明确说“完成了”后，请按skill中的complete流程完成 GitHub 入库。

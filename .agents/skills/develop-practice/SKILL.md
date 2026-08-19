@@ -33,7 +33,7 @@ Daily 中出现线索
 
 - 只有一个刚出现的念头，没有行动或反馈：先留在 Daily；
 - 只是要保存一条经历或输入：分别使用 `capture-journal` 或 `capture-input`；
-- 只是想回看最近记录：先使用 `review-seven-days`；
+- 只是想回看最近记录：先使用 `review-daily-entries`；
 - 一次性待办：直接行动，不必建立 Practice。
 
 ## 开始前读取

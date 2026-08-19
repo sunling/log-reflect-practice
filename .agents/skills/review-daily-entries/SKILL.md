@@ -1,5 +1,5 @@
 ---
-name: review-seven-days
+name: review-daily-entries
 description: 回看指定时间范围内的 daily/inputs 与必要的 daily/journal，识别反复出现的问题、触动、矛盾、行动和判断变化，并推荐少量真正值得继续观察或进入 Practice 的方向。用于“看看最近一周的输入”“我最近反复在想什么”“哪些内容可以发展成分享或文章”等请求；默认只在对话中给出回看结果，不创建周报、复盘文件或新的中间目录。
 ---
 
