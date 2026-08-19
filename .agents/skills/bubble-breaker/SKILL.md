@@ -1,9 +1,9 @@
 ---
-name: explore-new-bubble
-description: 突破信息茧房：定期发现与用户现有 feed 有明显距离的高质量资源，生成一个真正去读/听/看的任务；用户完成后只做低摩擦完成记录。也支持多元视角挑战、近期盲区探索、随机跨界连接和苏格拉底式追问。
+name: bubble-breaker
+description: 突破信息茧房：定期发现与用户现有 feed 有明显距离的高质量资源，生成一个真正去读/听/看的任务；用户完成后只做低摩擦完成记录。
 ---
 
-# Explore New Bubble｜陌生输入与信息茧房探索
+# Bubble Breaker｜陌生输入与信息茧房探索
 
 ## 目标
 
@@ -86,8 +86,8 @@ description: 突破信息茧房：定期发现与用户现有 feed 有明显距�
 触发：
 
 ```text
-/explore-new-bubble discover
-/explore-new-bubble discover [可选方向]
+/bubble-breaker discover
+/bubble-breaker discover [可选方向]
 ```
 
 定时任务默认使用这个模式。
@@ -141,8 +141,8 @@ description: 突破信息茧房：定期发现与用户现有 feed 有明显距�
 触发：
 
 ```text
-/explore-new-bubble complete
-/explore-new-bubble complete [resource]
+/bubble-breaker complete
+/bubble-breaker complete [resource]
 ```
 
 也适用于用户在收到推荐后说：
@@ -206,107 +206,15 @@ tags:
 
 ---
 
-# 其他模式
-
-## 3. `challenge`｜多元视角挑战
-
-触发：
-
-```text
-/explore-new-bubble challenge [话题或观点]
-/explore-new-bubble [话题或观点]
-```
-
-流程：
-
-1. 用一句话复述用户当前观点，确认挑战对象；
-2. 必要时检索可靠、立场多样的资料；
-3. 选择 3–5 个真正不同的视角；
-4. 每个视角包含核心论点、支撑逻辑或证据、适用条件、它忽略了什么；
-5. 至少包含一个反直觉视角和一个跨领域类比；
-6. 最后留下 1–2 个用户可能还没问的问题。
-
-不要为了满足数量要求制造虚假的“少数派观点”。
-
-## 4. `blindspot`｜近期盲区探索
-
-触发：
-
-```text
-/explore-new-bubble blindspot
-/explore-new-bubble blindspot [具体话题]
-```
-
-默认读取最近 7 天：
-
-```text
-daily/inputs/{YYYY}/{YYYYMM}/
-daily/journal/{YYYY}/{YYYYMM}/
-```
-
-读取规则：
-
-- 分析近期注意力、输入和问题时，两类 Daily 都要查看；
-- 只分析生活状态时，可以以 journal 为主；
-- 用户指定时间范围时严格使用指定范围；
-- 不用几条记录推断稳定人格、诊断或长期心理状态。
-
-输出：近期注意力地图、可能的盲区、反例或缺失证据、一个意外连接、继续观察的问题。
-
-## 5. `connect`｜随机跨界连接
-
-触发：
-
-```text
-/explore-new-bubble connect [起始概念]
-/explore-new-bubble connect
-```
-
-流程：
-
-1. 有起始概念时从它出发；没有时随机选择两个距离较远的领域；
-2. 优先避开用户近期已经高频关注的领域；
-3. 核查两者是否存在真实交叉研究、共同结构或可解释类比；
-4. 区分“已有交叉事实”和“启发性类比”；
-5. 给出真实连接、类比失效处和一个小实验。
-
-## 6. `socratic`｜苏格拉底式追问
-
-触发：
-
-```text
-/explore-new-bubble socratic [观点或信念]
-```
-
-流程：
-
-1. 复述观点，避免把它改成更极端版本；
-2. 给出 5–7 个递进问题，覆盖定义、假设、证据、反例和后果；
-3. 可以给一个“可能的修正版观点”，但明确它只是候选。
-
-问题要真诚、具体，不使用居高临下的“你有没有想过”。
-
----
-
 ## 参数解析
 
-- 第一个 token 匹配 `discover`、`complete`、`challenge`、`blindspot`、`connect` 或 `socratic` 时，使用对应模式；
+- 第一个 token 匹配 `discover` 或 `complete` 时，使用对应模式；
 - 没有参数时：
-  - 在定时探索或用户要求“给我一个陌生输入”语境下默认 `discover`；
+  - 在定时探索或用户要求"给我一个陌生输入"语境下默认 `discover`；
   - 在用户表达刚完成推荐资源时默认 `complete`；
-  - 其他情况下默认 `challenge`；
+  - 其他情况下默认 `discover`；
 - 参数是仓库相对文件路径时，读取该文件作为主要输入；
 - 不接受或记录本机绝对路径作为长期来源。
-
-## Challenge / Blindspot / Connect / Socratic 的写入
-
-只有用户明确要求保存时，才按 `capture-input` 的协议写入：
-
-```text
-daily/inputs/{YYYY}/{YYYYMM}/{YYYYMMDD}-explore-new-bubble-{keyword}.md
-```
-
-`discover` 永远不因为“推荐成功”而创建完成记录；`complete` 才写入。
 
 ## 完成检查
 

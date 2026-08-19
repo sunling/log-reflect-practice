@@ -39,7 +39,7 @@
 - [capture-input](.agents/skills/capture-input/SKILL.md)：保存外部输入，同时区分原内容与你的回应。
 - [review-seven-days](.agents/skills/review-seven-days/SKILL.md)：回看最近七天，找出重复、变化和未完成之处。
 - [develop-practice](.agents/skills/develop-practice/SKILL.md)：把有证据的线索发展为可持续的小实践。
-- [explore-new-bubble](.agents/skills/explore-new-bubble/SKILL.md)：每次引入一个陌生而具体的世界输入，完成之后再留下记录。
+- [bubble-breaker](.agents/skills/bubble-breaker/SKILL.md)：每次引入一个陌生而具体的世界输入，完成之后再留下记录。
 
 这些是**仓库内 Skill 示例**，目的是展示如何把工作方法写给 AI。它们不会自动安装成 ChatGPT 或 Codex 的全局 Skill；复制仓库后，你可以按自己的习惯直接修改。
 

@@ -6,7 +6,7 @@
 | --- | --- | --- |
 | 记录今天发生的事、感受或身体经验 | `capture-journal` | `daily/journal/` |
 | 保存文章、书、播客、课程或对话 | `capture-input` | `daily/inputs/` |
-| 主动发现一个陌生领域的输入 | `explore-new-bubble` | 先留在对话中；完成后进入 `daily/inputs/` |
+| 主动发现一个陌生领域的输入 | `bubble-breaker` | 先留在对话中；完成后进入 `daily/inputs/` |
 | 回看一周、找重复线索 | `review-seven-days` | 当前对话；确认后再写文件 |
 | 把线索变成可持续行动 | `develop-practice` | `practices/<实践名>/` |
 
@@ -20,4 +20,4 @@
 
 如果回看中发现可能的 Practice，先展示证据并征得使用者确认，再创建目录。
 
-如果使用者想打破信息茧房，`explore-new-bubble` 负责寻找资源；不要在对方完成之前把推荐当成已经发生的输入。
+如果使用者想打破信息茧房，`bubble-breaker` 负责寻找资源；不要在对方完成之前把推荐当成已经发生的输入。
