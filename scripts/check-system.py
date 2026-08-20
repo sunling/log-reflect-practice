@@ -23,6 +23,7 @@ REQUIRED_PATHS = (
 SKILLS_DIR = ROOT / ".agents" / "skills"
 MARKDOWN_LINK = re.compile(r"(?<!!)\[[^]]*]\(([^)]+)\)")
 MACHINE_PATH = re.compile(r"(?:/Users/|/home/|/root/|[A-Za-z]:\\\\Users\\\\)")
+SKILL_NAME = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 REFERENCE_FORBIDDEN = {
     "sunling/sunling-os": "包含作者的个人仓库",
     "sunling621@gmail.com": "包含作者的个人邮箱",
@@ -66,13 +67,16 @@ def check_skills(errors: list[str]) -> None:
         errors.append("缺少 .agents/skills/ 目录")
         return
 
-    skill_files = sorted(SKILLS_DIR.glob("*/SKILL.md"))
+    skill_files = sorted(
+        path for path in ROOT.rglob("SKILL.md") if ".git" not in path.parts
+    )
     if not skill_files:
-        errors.append(".agents/skills/ 中没有 SKILL.md")
+        errors.append("仓库中没有 SKILL.md")
         return
 
     for path in skill_files:
         relative = path.relative_to(ROOT)
+        text = path.read_text(encoding="utf-8")
         try:
             fields = parse_frontmatter(path)
         except ValueError as exc:
@@ -91,6 +95,22 @@ def check_skills(errors: list[str]) -> None:
             )
         if not fields.get("description"):
             errors.append(f"{relative}：description 不能为空")
+        name = fields.get("name", "")
+        if name and not SKILL_NAME.fullmatch(name):
+            errors.append(f"{relative}：name 必须使用小写 hyphen-case")
+        if len(name) > 64:
+            errors.append(f"{relative}：name 不能超过 64 个字符")
+        description = fields.get("description", "")
+        if len(description) > 1024:
+            errors.append(f"{relative}：description 不能超过 1024 个字符")
+        if "<" in description or ">" in description:
+            errors.append(f"{relative}：description 不能包含尖括号")
+        if not re.search(r"(?m)^# .+", text):
+            errors.append(f"{relative}：正文缺少一级标题")
+        if len(text.splitlines()) > 500:
+            errors.append(f"{relative}：正文超过 500 行，应拆分 references 或 scripts")
+        if not text.endswith("\n"):
+            errors.append(f"{relative}：文件末尾缺少换行")
 
 
 def check_markdown_links(errors: list[str]) -> None:
@@ -157,8 +177,10 @@ def main() -> int:
             print(f"- {error}")
         return 1
 
-    skill_count = len(list(SKILLS_DIR.glob("*/SKILL.md")))
-    print(f"检查通过：基本结构完整，{skill_count} 个仓库内 Skill 格式正常。")
+    skill_count = len(
+        [path for path in ROOT.rglob("SKILL.md") if ".git" not in path.parts]
+    )
+    print(f"检查通过：基本结构完整，{skill_count} 个 SKILL.md 格式正常。")
     return 0
 
 
