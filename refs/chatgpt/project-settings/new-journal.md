@@ -14,7 +14,7 @@
 
 Repository：
 
-`sunling/sunling-os`
+`YOUR_GITHUB_USERNAME/YOUR_REPOSITORY`
 
 Default branch：
 
@@ -22,11 +22,11 @@ Default branch：
 
 Skill path：
 
-`.agents/skills/capture-diary/SKILL.md`
+`.agents/skills/capture-journal/SKILL.md`
 
 Skill URL：
 
-`https://github.com/sunling/sunling-os/blob/main/.agents/skills/capture-diary/SKILL.md`
+`https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY/blob/main/.agents/skills/capture-journal/SKILL.md`
 
 在处理日记前，请优先读取并遵循这个 skill。不要在 Project instruction 里重新发明或覆盖 skill 中已经定义的文风、纠偏规则、正文结构、日期解析和写入逻辑。
 
@@ -36,17 +36,15 @@ Skill URL：
 
 日记写回同一个 repo：
 
-`sunling/sunling-os`
+`YOUR_GITHUB_USERNAME/YOUR_REPOSITORY`
 
 写入路径遵循 skill 中定义的规则，根目录为：
 
 `daily/journal/`
 
-具体路径、日期格式、星期格式、创建或追加逻辑，都以 `.agents/skills/capture-diary/SKILL.md` 为准。
+具体路径、日期格式、星期格式、创建或追加逻辑，都以 `.agents/skills/capture-journal/SKILL.md` 为准。
 
-默认时区使用：
-
-`America/Los_Angeles`
+默认时区读取仓库根目录 `PROFILE.md` 中的“时区”。如果没有填写，先询问我所在的时区，不要根据语言、IP 或仓库内容猜测。
 
 如果我在输入里明确提到“昨天”“前天”“上周五”或具体日期，请根据语境交给 skill 判断并写入对应日期。
 

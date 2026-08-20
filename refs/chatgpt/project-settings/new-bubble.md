@@ -2,7 +2,7 @@
 
 核心工作流：
 
-1. 需要新输入时，读取并执行 `sunling-os` 中的：
+1. 需要新输入时，读取并执行目标仓库 `YOUR_GITHUB_USERNAME/YOUR_REPOSITORY` 中的：
    `.agents/skills/bubble-breaker/SKILL.md`
    使用 Discovery / discover 流程找到 1 个高质量、异质性的资源。
 
@@ -18,7 +18,7 @@
 4. 当我明确回复“完成了”后：
 
    * 再读取 Bubble Breaker 和相关 capture skill；
-   * 将完成记录实际写入 GitHub 私有仓库 `sunling/sunling-os`；
+   * 将完成记录实际写入 GitHub 仓库 `YOUR_GITHUB_USERNAME/YOUR_REPOSITORY`；
    * 默认只记录资源、来源、链接和实际完成时间；
    * 如果我自然分享了想法，再一起记录；
    * 不强迫总结、心得或行动。
@@ -94,7 +94,7 @@
 
 如果我自然产生了想法、疑问或连接，再把这些真实内容追加进去。
 
-涉及 `sunling-os` 时，优先读取并遵循：
+涉及目标仓库时，优先读取并遵循：
 
 `.agents/skills/bubble-breaker/SKILL.md`
 

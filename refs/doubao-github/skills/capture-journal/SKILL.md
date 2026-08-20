@@ -64,16 +64,16 @@ daily/journal/{YYYY}/{YYYYMM}/{YYYYMMDD}-周X-{关键词}.md
 ---
 ## GitHub 执行与存储（重要）
 
-在 AI 对话环境中，本地文件系统通常是临时的，因此所有的长期记录都必须通过 GitHub API（或挂载的 GitHub 插件）持久化到目标仓库（默认 `sunling/sunling-os`，或以用户指定的仓库为准）中。
+在 AI 对话环境中，本地文件系统通常是临时的，因此所有长期记录都必须通过 GitHub API（或挂载的 GitHub 插件）持久化到配置的目标仓库中。安装此 Skill 时，应先把 `YOUR_GITHUB_USERNAME/YOUR_REPOSITORY` 替换为用户自己的仓库；如果占位符仍未替换，写入前必须询问，不能猜测目标仓库。
 
 执行步骤：
-1. **确认仓库与路径**：目标仓库为 `sunling/sunling-os`。确定文件在该仓库中的相对路径，例如 `daily/inputs/{YYYY}/{YYYYMM}/{YYYYMMDD}-xxx.md`。
+1. **确认仓库与路径**：目标仓库为 `YOUR_GITHUB_USERNAME/YOUR_REPOSITORY`。按 `daily/journal/{YYYY}/{YYYYMM}/{YYYYMMDD}-周X-{关键词}.md` 确定相对路径。
 2. **检查文件状态**：使用读取工具判断该路径下是否已存在文件。
 3. **提交变更**：
    - 如果文件不存在，发起新建文件的 API 调用。
    - 如果文件已存在且需追加，先获取原文件内容（及 SHA 摘要），追加内容后更新。
-4. **规范 Commit Message**：使用类似 `feat: add daily input {关键字}` 的格式。
-5. **对话返回**：向用户简洁回复“已成功提交到 GitHub: {文件路径}”，不要在对话中打印完整的日记内容。
+4. **规范 Commit Message**：新建时使用类似 `feat: add journal {关键词}`，追加时使用类似 `docs: append journal {日期}` 的格式。
+5. **对话返回**：向用户简洁回复“已成功提交到 GitHub：{文件路径}”，不要在对话中重复完整日记内容。
 ## 七、执行环境分支
 ### 1. 当具备文件系统或云盘写入能力时
 优先直接完成文件创建或追加。执行完成后，对话回复只需简洁说明：
