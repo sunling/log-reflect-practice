@@ -1,9 +1,8 @@
 ---
-name: bubble-breaker-github
-description: 突破信息茧房：定期发现与用户现有 feed 有明显距离的高质量资源，生成一个真正去读/听/看的任务；用户完成后只做低摩擦完成记录。
-argument-hint: "[discover|complete] [resource]"
+name: bubble-breaker
+description: 发现与用户现有信息源有明显距离的高质量资源，每次生成一个可完成的阅读、收听或观看任务，并在用户完成后低摩擦记录。用于“给我一个陌生输入”“打破信息茧房”“推荐一个平时不会看的资源”、定期 discover，以及用户对该任务说“完成了”“读完了”“听完了”“看完了”时。
 ---
-# Bubble Breaker｜信息茧房突破器
+# Bubble Breaker｜陌生输入与信息茧房探索
 ## 目标
 帮助用户持续接触"世界本身"，而不只是继续消费熟悉的知识型、自我成长型内容。
 这个 Skill 最重要的闭环不是"推荐更多东西"，而是：
@@ -113,7 +112,7 @@ argument-hint: "[discover|complete] [resource]"
 ### 流程
 1. 确认当前会话中最近一个明确的陌生输入资源；
 2. 如果当前上下文无法确定资源，再查看近期 `daily/inputs` 或让用户提供资源名；不要猜；
-3. 使用用户当前所在地的实际完成日期和时间；
+3. 优先使用 `PROFILE.md` 中的时区记录实际完成日期和时间；未填写时使用当前执行环境的本地时区，若日期有歧义再询问；
 4. 按 `capture-input` 规范写入：
 ```text
 daily/inputs/{YYYY}/{YYYYMM}/{YYYYMMDD}-{keyword}.md
@@ -160,16 +159,16 @@ tags:
 
 ## GitHub 执行与存储（重要）
 
-在 AI 对话环境中，本地文件系统通常是临时的，因此所有的长期记录都必须通过 GitHub API（或挂载的 GitHub 插件）持久化到目标仓库（默认 `sunling/sunling-os`，或以用户指定的仓库为准）中。
+在 AI 对话环境中，本地文件系统通常是临时的，因此所有长期记录都必须通过 GitHub API（或挂载的 GitHub 插件）持久化到配置的目标仓库中。安装此 Skill 时，应先把 `YOUR_GITHUB_USERNAME/YOUR_REPOSITORY` 替换为用户自己的仓库；如果占位符仍未替换，写入前必须询问，不能猜测目标仓库。
 
 执行步骤：
-1. **确认仓库与路径**：目标仓库为 `sunling/sunling-os`。确定文件在该仓库中的相对路径，例如 `daily/inputs/{YYYY}/{YYYYMM}/{YYYYMMDD}-xxx.md`。
+1. **确认仓库与路径**：目标仓库为 `YOUR_GITHUB_USERNAME/YOUR_REPOSITORY`。完成资源后，按 `daily/inputs/{YYYY}/{YYYYMM}/{YYYYMMDD}-{关键词}.md` 确定相对路径；`discover` 阶段不创建文件。
 2. **检查文件状态**：使用读取工具判断该路径下是否已存在文件。
 3. **提交变更**：
    - 如果文件不存在，发起新建文件的 API 调用。
    - 如果文件已存在且需追加，先获取原文件内容（及 SHA 摘要），追加内容后更新。
 4. **规范 Commit Message**：使用类似 `feat: add daily input {关键字}` 的格式。
-5. **对话返回**：向用户简洁回复“已成功提交到 GitHub: {文件路径}”，不要在对话中打印完整的日记内容。
+5. **对话返回**：向用户简洁回复“已成功提交到 GitHub：{文件路径}”，不要在对话中重复完整记录内容。
 ## 完成检查
 ### discover
 - 是否只推荐了 1 个具体资源？
@@ -181,7 +180,7 @@ tags:
 ### complete
 - 用户是否真的明确表示完成？
 - 是否记录了实际完成时间？
-- 是否使用用户当前所在地时间？
+- 是否按 `PROFILE.md` 中的时区记录，或在日期有歧义时询问？
 - 是否只记录真实存在的资源信息？
 - 是否没有强迫总结、行动化或人生启示？
 - 用户若表达了感受，是否只整理真实表达？

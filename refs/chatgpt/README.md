@@ -11,5 +11,11 @@
 
 ## 使用指南
 
-1. **项目配置**：在 ChatGPT 中创建一个新的 Project，并将 `project-settings/` 中的设定内容添加进系统提示词中，以确保 ChatGPT 理解你的个人记录体系。
-2. **执行与存储**：配合本地操作环境时，ChatGPT 会生成符合核心 `.agents/skills` 要求的回答与本地文件修改命令；如果你是通过第三方自动化调用 API，请参考 `scheduled-task-prompt/` 中的设定进行集成。
+1. **复制模板仓库**：先用仓库根目录的 **Use this template** 创建自己的仓库；真实记录建议放在 Private 仓库。
+2. **替换配置占位符**：把所选配置文件中的 `YOUR_GITHUB_USERNAME/YOUR_REPOSITORY` 替换为自己的仓库名，例如 `ling/my-recording-system`。不要保留占位符，也不要使用示例仓库。
+3. **填写个人偏好**：在仓库根目录的 `PROFILE.md` 中填写时区、主要语言和隐私边界。日期相关任务优先读取这里的时区；没有填写时，AI 应先询问，不要猜测。
+4. **连接 GitHub**：在 ChatGPT 中连接并授权 GitHub，确认当前对话既能读取目标仓库，也能在需要时写入。先用一条不敏感的测试记录验证完整流程。
+5. **项目配置**：在 ChatGPT 中创建 Project，根据用途选择 `project-settings/` 中的一个配置粘贴到 Project Instructions。日记、外部输入和 New Bubble 可以分别建立 Project，也可以按自己的习惯合并。
+6. **计划任务**：只有在对应流程已经手动运行成功后，再使用 `scheduled-task-prompt/` 创建定时任务。通知到邮箱是可选能力，不是记录系统的必要部分。
+
+Project Instructions 负责说明入口、仓库和执行边界；具体的整理、命名与写入规则仍以目标仓库中的 `.agents/skills/` 为准。

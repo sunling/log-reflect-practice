@@ -1,0 +1,1 @@
+请创建突破信息茧房的定期探索任务，每隔一天执行一次，早上九点推送给我。任务要求是读取 GitHub 仓库 `YOUR_GITHUB_USERNAME/YOUR_REPOSITORY` 下的 `.agents/skills/bubble-breaker/SKILL.md`，执行其中的 Discovery / `discover` 流程。生成 1 个待我认真阅读、收听或观看的资源任务。找到并核实资源后，只在任务结果中返回该资源任务，不要提前入库；等我明确说“完成了”后，再按 Skill 中的 `complete` 流程完成 GitHub 入库。
