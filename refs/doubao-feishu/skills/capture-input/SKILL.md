@@ -1,5 +1,5 @@
 ---
-name: capture-input
+name: capture-input-feishu
 description: 将用户的碎片化视听感悟、读书闪念、播客/视频/文章触动点和日常观察，低摩擦整理为 `daily/inputs/` 中按年月归档的原始学习记录。用于"记录一下""笔记入库"以及整理阅读、播客、视频、对话和生活输入。
 argument-hint: "[要记录的闪念、感悟或标题]"
 ---

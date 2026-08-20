@@ -1,5 +1,5 @@
 ---
-name: review-daily-entries
+name: review-daily-entries-github
 description: 回看指定时间范围内的 daily/inputs 与必要的 daily/journal，识别反复出现的问题、触动、矛盾、行动和判断变化，并推荐少量真正值得继续观察或进入 Practice 的方向。用于"看看最近一周的输入""我最近反复在想什么""哪些内容可以发展成分享或文章"等请求；默认只在对话中给出回看结果，不创建周报、复盘文件或新的中间目录。
 argument-hint: "[period=最近7天或明确日期范围] [focus=可选主题]"
 ---
@@ -93,40 +93,18 @@ argument-hint: "[period=最近7天或明确日期范围] [focus=可选主题]"
 - 为每个候选方向创建独立草稿；
 - 跨 Practice 的统一复盘日志。
 只有用户明确要求"把这次回看记录下来"时，才把本次回看作为一条当前日期的输入，按照 `capture-input` 的规范写入 `daily/inputs/{YYYY}/{YYYYMM}/`，并链接主要来源。不要建立专门的 review 目录。
-## 飞书 Drive 执行（重要）
-在豆包/AI 环境中，本地文件系统是**临时的**。回看时需要从飞书 Drive 下载文件读取，保存时需要上传到飞书 Drive。绝不能只操作本地文件。
-### 读取回看材料
-文件按年月分层组织在 `daily > inputs > {YYYY} > {YYYYMM}` 和 `daily > journal > {YYYY} > {YYYYMM}` 下。读取步骤：
-1. **定位年月文件夹**：先找到 inputs/journal 根文件夹，再进入对应年份和年月子文件夹：
-   ```bash
-   lark-cli drive +search --query "inputs" --doc-types folder --format json
-   lark-cli drive files list --params '{"folder_token":"{inputs文件夹token}","page_size":50}' --format json
-   ```
-2. **列出目标年月文件夹中的文件**：
-   ```bash
-   lark-cli drive files list --params '{"folder_token":"{年月文件夹token}","page_size":50}' --format json
-   ```
-3. **兼容旧扁平文件**：若年月文件夹中未找到，再检查 inputs/journal 根目录下的旧扁平文件。
-4. **筛选出指定日期范围内的文件**（按文件名中的日期前缀筛选）。
-5. **下载需要读取的文件**：
-   ```bash
-   lark-cli drive +download --file-token "{文件token}" --output ./{文件名}.md
-   ```
-6. 在本地读取分析，完成后不需要保留本地临时文件。
-### 保存回看结果（仅用户明确要求时）
-1. **在本地工作目录创建 md 文件**，使用相对路径。
-2. **创建年月分层目录（必须）**：飞书 Drive 路径必须为 `daily > inputs > {YYYY} > {YYYYMM}`。不存在则逐级创建：
-   ```bash
-   lark-cli drive +create-folder --name "2026" --folder-token "{inputs文件夹token}"
-   lark-cli drive +create-folder --name "202608" --folder-token "{2026年份文件夹token}"
-   ```
-   **必须按年月分层组织，不要直接上传到 inputs 根目录。**
-3. **上传到对应年月文件夹**：
-   ```bash
-   lark-cli drive +upload --file ./{文件名}.md --folder-token "{202608年月文件夹token}"
-   ```
-4. **记录返回的 file_token 和 url**。
-注意：`--file` 和 `--output` 必须使用**相对路径**，不能用绝对路径，否则会报 `unsafe file path` 错误。
+## GitHub 执行与存储（重要）
+
+在 AI 对话环境中，本地文件系统通常是临时的，因此所有的长期记录都必须通过 GitHub API（或挂载的 GitHub 插件）持久化到目标仓库（默认 `sunling/sunling-os`，或以用户指定的仓库为准）中。
+
+执行步骤：
+1. **确认仓库与路径**：目标仓库为 `sunling/sunling-os`。确定文件在该仓库中的相对路径，例如 `daily/inputs/{YYYY}/{YYYYMM}/{YYYYMMDD}-xxx.md`。
+2. **检查文件状态**：使用读取工具判断该路径下是否已存在文件。
+3. **提交变更**：
+   - 如果文件不存在，发起新建文件的 API 调用。
+   - 如果文件已存在且需追加，先获取原文件内容（及 SHA 摘要），追加内容后更新。
+4. **规范 Commit Message**：使用类似 `feat: add daily input {关键字}` 的格式。
+5. **对话返回**：向用户简洁回复“已成功提交到 GitHub: {文件路径}”，不要在对话中打印完整的日记内容。
 ## 隐私与事实边界
 - 私人日记、身体、医疗、关系、工作和第三方经历只在帮助用户理解自己时使用；
 - 推荐公开表达前，单独标记需要匿名化、授权或删除的细节；

@@ -1,5 +1,5 @@
 ---
-name: develop-practice
+name: develop-practice-feishu
 description: 当某个线索在回看中反复出现且用户愿意行动时，帮助发展成可持续的小实践，保存到 `practices/` 文件夹。用于"我想养成一个习惯""帮我把这个变成一个实践""七天回看后我想做点什么"等场景；默认把实践定义为可调整、可放弃的实验，而不是必须完成的任务。
 argument-hint: "[反复出现的线索或想发展的实践]"
 ---
@@ -54,7 +54,7 @@ argument-hint: "[反复出现的线索或想发展的实践]"
 ## Markdown 模板
 ```md
 ---
-name: {practice-name}
+name: {practice-name}-feishu
 created: {YYYY-MM-DD}
 status: active
 review-cycle: 两周

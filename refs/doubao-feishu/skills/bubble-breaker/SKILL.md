@@ -1,5 +1,5 @@
 ---
-name: bubble-breaker
+name: bubble-breaker-feishu
 description: 突破信息茧房：定期发现与用户现有 feed 有明显距离的高质量资源，生成一个真正去读/听/看的任务；用户完成后只做低摩擦完成记录。
 argument-hint: "[discover|complete] [resource]"
 ---
