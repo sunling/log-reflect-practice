@@ -106,15 +106,41 @@ description: 回看指定时间范围内的 `daily/inputs/` 与必要的 `daily/
 6. 在本地读取分析，完成后不需要保留本地临时文件。
 ### 保存回看结果（仅用户明确要求时）
 1. **在本地工作目录创建 md 文件**，使用相对路径。
-2. **创建年月分层目录（必须）**：飞书 Drive 路径必须为 `daily > inputs > {YYYY} > {YYYYMM}`。不存在则逐级创建：
+2. **定位或创建年月分层目录（必须，先查后建）**：飞书 Drive 路径必须为 `daily > inputs > {YYYY} > {YYYYMM}`。
+
+   > **⚠️ 关键警告**：飞书 Drive 允许同名文件夹并存。搜索到多个同名 `inputs` 时，只选择目标 `daily` 下的目录；无法确定时让用户确认。年份与年月两层都必须先完整列出父目录子项，再精确匹配 `type == "folder"` 和名称。
+
+   先定位 `inputs`，再列出其全部子项，精确匹配 `type == "folder"` 且 `name == "{YYYY}"`：
+
    ```bash
-   lark-cli drive +create-folder --name "2026" --folder-token "{inputs文件夹token}"
-   lark-cli drive +create-folder --name "202608" --folder-token "{2026年份文件夹token}"
+   lark-cli drive +search --query "inputs" --doc-types folder --format json
+   lark-cli drive files list --params '{"folder_token":"{inputs文件夹token}","page_size":200}' --format json
    ```
+
+   找到 1 个则复用，找到多个则停止创建并消歧。只有找到 0 个时才执行：
+
+   ```bash
+   lark-cli drive +create-folder --name "{YYYY}" --folder-token "{inputs文件夹token}"
+   ```
+
+   再列出年份文件夹的全部子项，精确匹配 `type == "folder"` 且 `name == "{YYYYMM}"`：
+
+   ```bash
+   lark-cli drive files list --params '{"folder_token":"{年份文件夹token}","page_size":200}' --format json
+   ```
+
+   找到 1 个则复用，找到多个则停止创建并消歧。只有找到 0 个时才执行：
+
+   ```bash
+   lark-cli drive +create-folder --name "{YYYYMM}" --folder-token "{年份文件夹token}"
+   ```
+
+   两次列表响应若还有下一页，都必须继续分页直到列完，再判断匹配数量。
+
    **必须按年月分层组织，不要直接上传到 inputs 根目录。**
 3. **上传到对应年月文件夹**：
    ```bash
-   lark-cli drive +upload --file ./{文件名}.md --folder-token "{202608年月文件夹token}"
+   lark-cli drive +upload --file ./{文件名}.md --folder-token "{年月文件夹token}"
    ```
 4. **记录返回的 file_token 和 url**。
 注意：`--file` 和 `--output` 必须使用**相对路径**，不能用绝对路径，否则会报 `unsafe file path` 错误。
