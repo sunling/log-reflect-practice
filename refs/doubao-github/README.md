@@ -17,6 +17,7 @@
 - **`capture-input`**：用于将文章、播客、视频等外部输入，以及读书闪念等低摩擦地整理归档（存入GitHub 仓库的 `daily/inputs/` 目录）。
 - **`bubble-breaker`**：用于主动推荐并记录与现有 feed 不同的陌生领域高质量资源，打破信息茧房（完成的记录存入GitHub 仓库的 `daily/inputs/` 目录）。
 - **`review-daily-entries`**：用于回看近期（如最近七天）在GitHub 仓库上的输入和日记，识别反复出现的线索、触动和变化，给出继续行动的方向。
+- **`write-weekly-article`**：读取 GitHub 仓库中过去七天的日记和输入，整理成一篇默认给自己看的周记文章。
 - **`develop-practice`**：用于将日常记录中反复出现的线索，转化为最小可持续的长期实践（存入GitHub 仓库的 `practices/` 目录）。
 
 

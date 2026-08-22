@@ -33,11 +33,12 @@
 └── AGENTS.md
 ```
 
-## 五个示例 Skill
+## 六个示例 Skill
 
 - [capture-journal](.agents/skills/capture-journal/SKILL.md)：把一段经历整理成 journal，但不替你编造解释。
 - [capture-input](.agents/skills/capture-input/SKILL.md)：保存外部输入，同时区分原内容与你的回应。
 - [review-daily-entries](.agents/skills/review-daily-entries/SKILL.md)：回看最近七天，找出重复、变化和未完成之处。
+- [write-weekly-article](.agents/skills/write-weekly-article/SKILL.md)：读取过去七天的日记和输入，整理成一篇默认给自己看的周记文章。
 - [develop-practice](.agents/skills/develop-practice/SKILL.md)：把有证据的线索发展为可持续的小实践。
 - [bubble-breaker](.agents/skills/bubble-breaker/SKILL.md)：每次引入一个陌生而具体的世界输入，完成之后再留下记录。
 
