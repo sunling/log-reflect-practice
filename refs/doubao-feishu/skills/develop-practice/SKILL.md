@@ -114,21 +114,36 @@ practices/{practice-name}/
 AI 对话环境中的本地文件通常是临时的，长期内容必须上传到飞书 Drive。
 
 1. 使用相对路径准备 `./mission.md` 与 `./current.md`；不要使用绝对路径。
-2. 在 `practices` 下查找或创建 `{practice-name}` 子目录。先检查同名或近义目录，不重复创建。
+2. 在 `practices` 下定位或创建 `{practice-name}` 子目录。
+
+   > **⚠️ 关键警告**：飞书 Drive 允许同名文件夹并存。不能因为搜索不到预期结果就直接创建。先定位目标 `practices`，再完整列出其子项并精确匹配目录名。
+
+   ```bash
+   lark-cli drive +search --query "practices" --doc-types folder --format json
+   lark-cli drive files list --params '{"folder_token":"{practices文件夹token}","page_size":200}' --format json
+   ```
+
+   - 搜索到多个同名 `practices` 时，根据目标系统根目录或既有配置消歧；无法确定时让用户确认，不创建新的根目录；
+   - 完整处理分页后，在 `data.files` 中筛选 `type == "folder"` 且 `name == "{practice-name}"`；
+   - 找到 1 个 → 复用其 token，并读取已有 `mission.md` 与 `current.md`；
+   - 找到 0 个 → 确认证据门槛后才创建；
+   - 找到多个 → 不再创建，根据既有文件消歧；仍无法确定时让用户选择。
+
 3. 新建时把两个文件上传到该子目录，并保存各自的 `file_token` 和链接。
 4. 更新时先下载现有文件；默认只更新 `current.md`。使用已有 `file_token` 覆盖上传，保留原链接。
 5. 本地创建但没有上传不算完成。
 6. 成功后只报告飞书目录、文件名和链接，不重复完整正文。
 
-可使用的命令形式：
+仅在精确匹配 `{practice-name}` 的目录数量为 0 时，才执行创建：
 
 ```bash
-lark-cli drive +search --query "practices" --doc-types folder --format json
 lark-cli drive +create-folder --name "{practice-name}" --folder-token "{practices文件夹token}"
 lark-cli drive +upload --file ./mission.md --folder-token "{practice子目录token}"
 lark-cli drive +upload --file ./current.md --folder-token "{practice子目录token}"
 lark-cli drive +upload --file ./current.md --file-token "{current.md 的 file_token}"
 ```
+
+`create-folder` 只能在精确匹配数量为 0 时执行。
 
 ## 隐私与事实边界
 

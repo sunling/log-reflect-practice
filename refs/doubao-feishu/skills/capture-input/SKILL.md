@@ -22,10 +22,6 @@ daily/inputs/{YYYY}/{YYYYMM}/{YYYYMMDD}-{关键词}.md
 ```text
 daily/inputs/{YYYY}/{YYYYMM}/
 ```
-示例：
-```text
-daily/inputs/2026/202607/20260712-学习与炼化.md
-```
 规则：
 - 需要确定日期时，优先读取 `PROFILE.md` 中的时区；未填写时使用当前执行环境的本地日期，若相对日期仍有歧义再询问；
 - 年月目录不存在时安全创建；
@@ -37,26 +33,74 @@ daily/inputs/2026/202607/20260712-学习与炼化.md
 来源不是必填信息。只有原始材料明确提供了书名、节目、平台、作者或对话对象等外部来源时，才在 frontmatter 中增加 `source`。来源不明确时直接省略，不写"其他"，也不要猜测。
 ## 飞书 Drive 上传执行（重要）
 在豆包/AI 环境中，本地文件系统是**临时的**，写入本地文件后**必须上传到飞书 Drive** 才是持久存储。绝不能只创建本地文件就结束任务。
+
 执行步骤：
-1. **在本地工作目录创建 md 文件**，使用相对路径（如 `./20260818-大脑肥胖症.md`）。
-2. **创建年月分层目录（必须）**：飞书 Drive 路径必须为 `daily > inputs > {YYYY} > {YYYYMM}`。先确认对应年月文件夹存在，不存在则逐级创建：
-   ```bash
-   # 先找到 inputs 文件夹 token
-   lark-cli drive +search --query "inputs" --doc-types folder --format json
-   # 在 inputs 下创建年份文件夹（如已存在则跳过）
-   lark-cli drive +create-folder --name "2026" --folder-token "{inputs文件夹token}"
-   # 在年份文件夹下创建年月文件夹（如已存在则跳过）
-   lark-cli drive +create-folder --name "202608" --folder-token "{2026年份文件夹token}"
-   ```
-   **必须按年月分层组织，不要直接上传到 inputs 根目录。** 即使当前 inputs 下是扁平结构，新文件也必须进入年月子目录，逐步完成迁移。
+
+1. **在本地工作目录创建 md 文件**，使用相对路径（如 `./{YYYYMMDD}-{关键词}.md`）。
+2. **定位或创建年月分层目录（必须，先查后建）**：飞书 Drive 路径必须为 `daily > inputs > {YYYY} > {YYYYMM}`。
+
+> **⚠️ 关键警告**：飞书 Drive 允许同名文件夹并存。不检查就直接执行 `create-folder` 会产生重复目录。每一层都必须先列出父目录下的子项，精确匹配名称；存在则复用 token，不存在才创建。
+
+### a. 定位 `inputs` 文件夹
+
+```bash
+lark-cli drive +search --query "inputs" --doc-types folder --format json
+```
+
+如果搜索结果中有多个同名 `inputs`，只选择位于目标 `daily` 下的目录。无法根据父目录或既有配置确定时，停止创建并让用户确认，不要猜测，也不要再创建一个 `inputs`。
+
+### b. 定位或创建 `{YYYY}` 年份文件夹
+
+先列出 `inputs` 下的子项：
+
+```bash
+lark-cli drive files list --params '{"folder_token":"{inputs文件夹token}","page_size":200}' --format json
+```
+
+在返回的 `data.files` 中筛选 `type == "folder"` 且 `name == "{YYYY}"` 的项。若响应显示还有下一页，继续分页直到列完，再判断：
+
+- 找到 1 个 → 复用其 `token`；
+- 找到 0 个 → 才创建：
+
+  ```bash
+  lark-cli drive +create-folder --name "{YYYY}" --folder-token "{inputs文件夹token}"
+  ```
+
+- 找到多个 → 不再创建；优先使用已有记录明确关联的 token，否则让用户选择。
+
+### c. 定位或创建 `{YYYYMM}` 年月文件夹
+
+先列出年份文件夹下的子项：
+
+```bash
+lark-cli drive files list --params '{"folder_token":"{年份文件夹token}","page_size":200}' --format json
+```
+
+同样筛选 `type == "folder"` 且 `name == "{YYYYMM}"` 的项，并处理完整分页：
+
+- 找到 1 个 → 复用其 `token`；
+- 找到 0 个 → 才创建：
+
+  ```bash
+  lark-cli drive +create-folder --name "{YYYYMM}" --folder-token "{年份文件夹token}"
+  ```
+
+- 找到多个 → 不再创建；优先使用已有记录明确关联的 token，否则让用户选择。
+
+**必须按年月分层组织，不要直接上传到 inputs 根目录。** 即使当前 inputs 下是扁平结构，新文件也必须进入年月子目录，逐步完成迁移。
+
 3. **上传到对应年月文件夹**：
-   ```bash
-   lark-cli drive +upload --file ./20260818-大脑肥胖症.md --folder-token "{202608年月文件夹token}"
-   ```
-4. **记录返回的 file_token 和 url**。后续更新同一文件时，使用 `--file-token` 覆盖上传（保留原文件链接）：
-   ```bash
-   lark-cli drive +upload --file ./20260818-大脑肥胖症.md --file-token "{已有文件的file_token}"
-   ```
+
+```bash
+lark-cli drive +upload --file ./{YYYYMMDD}-{关键词}.md --folder-token "{年月文件夹token}"
+```
+
+4. **记录返回的 file_token 和 url**。后续更新同一文件时，使用 `--file-token` 覆盖上传，保留原文件链接：
+
+```bash
+lark-cli drive +upload --file ./{YYYYMMDD}-{关键词}.md --file-token "{已有文件的file_token}"
+```
+
 注意：`--file` 必须使用**相对路径**，不能用绝对路径，否则会报 `unsafe file path` 错误。
 ## 整理原则
 ### 1. 始终保留真实输入

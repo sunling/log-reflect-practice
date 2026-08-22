@@ -160,22 +160,49 @@ tags:
 ## 飞书 Drive 上传执行（重要）
 在豆包/AI 环境中，本地文件系统是**临时的**，写入本地文件后**必须上传到飞书 Drive** 才是持久存储。绝不能只创建本地文件就结束任务。
 执行步骤（`complete` 模式）：
-1. **在本地工作目录创建 md 文件**，使用相对路径（如 `./20260818-深海生物.md`）。
-2. **创建年月分层目录（必须）**：飞书 Drive 路径必须为 `daily > inputs > {YYYY} > {YYYYMM}`。先确认对应年月文件夹存在，不存在则逐级创建：
+1. **在本地工作目录创建 md 文件**，使用相对路径（如 `./{YYYYMMDD}-{关键词}.md`）。
+2. **定位或创建年月分层目录（必须，先查后建）**：飞书 Drive 路径必须为 `daily > inputs > {YYYY} > {YYYYMM}`。
+
+   > **⚠️ 关键警告**：飞书 Drive 允许同名文件夹并存。每一层都必须先列出父目录下的子项，精确匹配名称；存在则复用 token，不存在才创建。
+
+   先定位 `inputs`。搜索到多个同名结果时，只选择目标 `daily` 下的目录；无法确定时让用户确认：
+
    ```bash
-   # 先找到 inputs 文件夹 token
    lark-cli drive +search --query "inputs" --doc-types folder --format json
-   # 在 inputs 下创建年份文件夹（如已存在则跳过）
-   lark-cli drive +create-folder --name "2026" --folder-token "{inputs文件夹token}"
-   # 在年份文件夹下创建年月文件夹（如已存在则跳过）
-   lark-cli drive +create-folder --name "202608" --folder-token "{2026年份文件夹token}"
    ```
+
+   再完整列出 `inputs` 子项，精确匹配 `type == "folder"` 且 `name == "{YYYY}"`：
+
+   ```bash
+   lark-cli drive files list --params '{"folder_token":"{inputs文件夹token}","page_size":200}' --format json
+   ```
+
+   找到 1 个则复用，找到多个则停止创建并消歧。只有找到 0 个时才执行：
+
+   ```bash
+   lark-cli drive +create-folder --name "{YYYY}" --folder-token "{inputs文件夹token}"
+   ```
+
+   然后完整列出年份文件夹子项，精确匹配 `type == "folder"` 且 `name == "{YYYYMM}"`：
+
+   ```bash
+   lark-cli drive files list --params '{"folder_token":"{年份文件夹token}","page_size":200}' --format json
+   ```
+
+   同样，找到 1 个则复用，找到多个则停止创建并消歧。只有找到 0 个时才执行：
+
+   ```bash
+   lark-cli drive +create-folder --name "{YYYYMM}" --folder-token "{年份文件夹token}"
+   ```
+
+   两次列表响应若还有下一页，都必须继续分页直到列完，再判断匹配数量。
+
    **必须按年月分层组织，不要直接上传到 inputs 根目录。** 即使当前 inputs 下是扁平结构，新文件也必须进入年月子目录，逐步完成迁移。
 3. **上传到对应年月文件夹**：
    ```bash
-   lark-cli drive +upload --file ./20260818-深海生物.md --folder-token "{202608年月文件夹token}"
+   lark-cli drive +upload --file ./{YYYYMMDD}-{关键词}.md --folder-token "{年月文件夹token}"
    ```
-4. **记录返回的 file_token 和 url**。后续更新同一文件时，使用 `--file-token` 覆盖上传。
+4. **记录返回的 file_token 和 url**。后续更新同一文件时，使用 `--file-token` 覆盖上传，保留原文件链接。
 注意：`--file` 必须使用**相对路径**，不能用绝对路径，否则会报 `unsafe file path` 错误。
 ## 完成检查
 ### discover
