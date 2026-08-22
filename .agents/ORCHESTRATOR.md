@@ -8,6 +8,7 @@
 | 保存文章、书、播客、课程或对话 | `capture-input` | `daily/inputs/` |
 | 主动发现一个陌生领域的输入 | `bubble-breaker` | 先留在对话中；完成后进入 `daily/inputs/` |
 | 回看一周、找重复线索 | `review-daily-entries` | 当前对话；确认后再写文件 |
+| 用过去七天的日记和输入写一篇周记文章 | `write-weekly-article` | 当前对话；明确保存位置后再写文件 |
 | 把线索变成可持续行动 | `develop-practice` | `practices/<实践名>/` |
 
 ## 组合任务
