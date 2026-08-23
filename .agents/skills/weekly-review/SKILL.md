@@ -25,7 +25,6 @@ description: 回看最近七天或指定范围内的 `daily/journal/` 与 `daily
 
 - 只是保存一条新经历或外部输入：分别使用 `capture-journal` 或 `capture-input`；
 - 只是推荐陌生资源：使用 `bubble-breaker`；
-- 已经明确要把线索变成持续行动：使用 `develop-practice`；
 - 不把每周回看强行写成文章，也不因为出现一个想法就创建 Practice；
 - 不把旧 Review 当作本周新发生的原始证据。
 
@@ -75,10 +74,16 @@ description: 回看最近七天或指定范围内的 `daily/journal/` 与 `daily
 默认路径：
 
 ```text
-reviews/{YYYY}/{YYYYMM}/{YYYYMMDD}-weekly-review.md
+weekly/reviews/{YYYY}/{YYYYMM}/{开始日期}-{结束日期}-{关键词}.md
 ```
 
-其中 `YYYYMMDD` 是执行回看的日期。同一天重复运行时更新原文件，不创建重复版本。
+文件名中的两个 `YYYYMMDD` 分别是回看范围的开始与结束日期；年月目录按结束日期归档。`关键词` 从本次最核心且有证据的线索中提取，使用一个简短、具体、便于识别的词或短语，不使用“weekly-review”“回看”“总结”等泛称。例如：
+
+```text
+weekly/reviews/2026/202608/20260817-20260823-产出焦虑.md
+```
+
+创建新文件前，先查找同一日期范围的 Review。已经存在时更新原文件并保留原文件名，不因后续判断变化创建重复版本。执行日期继续记录在 frontmatter 的 `date` 字段中。
 
 最小结构：
 
