@@ -70,12 +70,11 @@ description: 回看指定时间范围内的 `daily/inputs/` 与必要的 `daily/
 ```
 内容不够时可以更短，不为填满栏目制造判断。
 ## 与下游的交接
-用户选定方向后，根据去向进入对应的 Skill 或 Practice：
-- 写作 / 分享 → 对应写作 Skill；
-- 工作坊 → `practices/workshops/`；
-- 异步问答 → `practices/qa/`；
-- 咨询 / 陪伴 → 对应 Practice 目录；
-- 发展新实践 → `develop-practice`。
+用户选定方向后：
+- 仍需要观察时，继续留在 Daily；
+- 已有明确去向时，进入仓库中对应的 Skill 或 Practice；
+- 准备持续行动但尚无对应 Practice 时，交给 `develop-practice`；
+- 只需要完成一次的事情，直接行动，不为它创建目录。
 交接时只传递真正相关的来源路径、核心问题和仍待确认的部分，不复制同一份正文到多个地方。
 ## 写入边界
 默认不创建：

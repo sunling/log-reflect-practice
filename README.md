@@ -4,7 +4,7 @@
 
 > 生活与输入 → Daily → 回看 → Practice → 反馈
 
-仓库里没有作者的私人记录，只有结构、说明、虚构样例，以及 5 个可修改的仓库内 Skill。你可以把它用于个人记录，也可以在“从记录到实践”工作坊中跟着搭建。
+仓库里没有作者的私人记录，只有结构、说明、虚构样例，以及 6 个可修改的仓库内 Skill。你可以把它用于个人记录，也可以在“从记录到实践”工作坊中跟着搭建。
 
 ## 开始使用
 
@@ -15,6 +15,16 @@
 
 如果当前仓库还没有显示 **Use this template**，仓库所有者需要先在 GitHub 的 **Settings → General → Template repository** 中开启它。
 
+## 选择使用方式
+
+核心目录和 Skill 在三种方式中保持一致。根据你使用的工具，选择对应的配置说明：
+
+- [ChatGPT + GitHub](refs/chatgpt/README.md)：在 ChatGPT Project 中接收记录，并通过 GitHub 持久化。
+- [豆包 + GitHub](refs/doubao-github/README.md)：在豆包智能体中使用 GitHub 保存记录。
+- [豆包 + 飞书](refs/doubao-feishu/README.md)：在豆包智能体中使用飞书云盘保存记录。
+
+先手动完成一条不敏感的测试记录，确认读取和写入都能工作，再配置定时任务。
+
 ## 目录
 
 ```text
@@ -24,6 +34,7 @@
 │   └── inputs/        # 书、文章、播客、对话等外部输入
 ├── practices/         # 从反复出现的线索中长出的持续实践
 ├── examples/          # 完全虚构的示例，不会混进真实记录
+├── refs/              # ChatGPT、豆包、GitHub 与飞书的环境配置
 ├── .agents/
 │   ├── ORCHESTRATOR.md
 │   ├── SOUL.md
