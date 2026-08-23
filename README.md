@@ -2,9 +2,9 @@
 
 这是一套可以放进 GitHub、和 AI 一起使用的最小记录系统。它不追求把所有信息都收藏起来，而是帮助你完成一个朴素的循环：
 
-> 生活与输入 → Daily → 回看 → Practice → 反馈
+> 生活与输入 → Daily → Weekly Review → Practice → 反馈
 
-仓库里没有作者的私人记录，只有结构、说明、虚构样例，以及 6 个可修改的仓库内 Skill。你可以把它用于个人记录，也可以在“从记录到实践”工作坊中跟着搭建。
+仓库里没有作者的私人记录，只有结构、说明、虚构样例，以及 5 个可修改的仓库内 Skill。你可以把它用于个人记录，也可以在“从记录到实践”工作坊中跟着搭建。
 
 ## 开始使用
 
@@ -19,7 +19,7 @@
 
 核心目录和 Skill 在三种方式中保持一致。根据你使用的工具，选择对应的配置说明：
 
-- [ChatGPT + GitHub](refs/chatgpt/README.md)：在 ChatGPT Project 中接收记录，并通过 GitHub 持久化。
+- [ChatGPT + GitHub](refs/chatgpt/README.md)：在 ChatGPT 中接收记录、定期回看，并通过 GitHub 持久化。
 - [豆包 + GitHub](refs/doubao-github/README.md)：在豆包智能体中使用 GitHub 保存记录。
 - [豆包 + 飞书](refs/doubao-feishu/README.md)：在豆包智能体中使用飞书云盘保存记录。
 
@@ -32,6 +32,7 @@
 ├── daily/
 │   ├── journal/       # 发生在自己身上的事、感受与观察
 │   └── inputs/        # 书、文章、播客、对话等外部输入
+├── reviews/           # 每次回看的存档，不混入原始 Daily
 ├── practices/         # 从反复出现的线索中长出的持续实践
 ├── examples/          # 完全虚构的示例，不会混进真实记录
 ├── refs/              # ChatGPT、豆包、GitHub 与飞书的环境配置
@@ -43,12 +44,11 @@
 └── AGENTS.md
 ```
 
-## 六个示例 Skill
+## 五个示例 Skill
 
 - [capture-journal](.agents/skills/capture-journal/SKILL.md)：把一段经历整理成 journal，但不替你编造解释。
 - [capture-input](.agents/skills/capture-input/SKILL.md)：保存外部输入，同时区分原内容与你的回应。
-- [review-daily-entries](.agents/skills/review-daily-entries/SKILL.md)：回看最近七天，找出重复、变化和未完成之处。
-- [write-weekly-article](.agents/skills/write-weekly-article/SKILL.md)：读取过去七天的日记和输入，整理成一篇默认给自己看的周记文章。
+- [weekly-review](.agents/skills/weekly-review/SKILL.md)：回看最近七天、保存回看档案、提出问题，并在确认后把线索发展成文章。
 - [develop-practice](.agents/skills/develop-practice/SKILL.md)：把有证据的线索发展为可持续的小实践。
 - [bubble-breaker](.agents/skills/bubble-breaker/SKILL.md)：每次引入一个陌生而具体的世界输入，完成之后再留下记录。
 
@@ -58,6 +58,7 @@
 
 - 今天发生了什么、我有什么感觉：`daily/journal/`
 - 我读到、听到或看到什么：`daily/inputs/`
+- 一段时间里反复出现了什么、我想继续问什么：`reviews/`
 - 某个问题反复出现，且我愿意持续行动：`practices/`
 - 只是一个念头，还没有证据：先留在 Daily，不急着立项
 
@@ -72,6 +73,7 @@
 
 - 先记录，再解释。
 - 让结构服务生活，不让生活迁就结构。
+- 回看存档与原始 Daily 分开，避免把 AI 的总结再次当成新输入。
 - 只有出现重复、行动或反馈时，才把线索升级为 Practice。
 - AI 可以帮助整理和追问，但不替你定义经验。
 

@@ -1,6 +1,6 @@
 # 仓库协作说明
 
-这个仓库帮助使用者完成“生活与输入 → Daily → 回看 → Practice → 反馈”的循环。
+这个仓库帮助使用者完成“生活与输入 → Daily → Weekly Review → Practice → 反馈”的循环。
 
 ## 开始任务前
 
@@ -16,6 +16,7 @@
 - 不确定保存位置或隐私边界时，先询问。
 - 新文件遵循对应目录 README 与 Skill 中的命名规则。
 - 不要因为一条孤立记录就创建长期 Practice。
+- Weekly Review 每次都存入 `reviews/`，不要写回 `daily/inputs/`。
 - 修改后说明新增或改动了哪些文件。
 
 ## 默认流程
@@ -23,6 +24,5 @@
 - 记录经历：读取 `.agents/skills/capture-journal/SKILL.md`
 - 保存外部输入：读取 `.agents/skills/capture-input/SKILL.md`
 - 探索一个陌生输入：读取 `.agents/skills/bubble-breaker/SKILL.md`
-- 回看最近七天：读取 `.agents/skills/review-daily-entries/SKILL.md`
-- 用过去七天材料写周记文章：读取 `.agents/skills/write-weekly-article/SKILL.md`
+- 回看最近七天、继续回答回看问题或从回看发展文章：读取 `.agents/skills/weekly-review/SKILL.md`
 - 发展持续实践：读取 `.agents/skills/develop-practice/SKILL.md`
