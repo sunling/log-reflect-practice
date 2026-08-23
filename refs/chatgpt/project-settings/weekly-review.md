@@ -16,7 +16,7 @@ Skill path：`.agents/skills/weekly-review/SKILL.md`
 
 1. 先从 GitHub 读取 `PROFILE.md`、`.agents/ORCHESTRATOR.md`、`reviews/README.md` 与 `.agents/skills/weekly-review/SKILL.md`；
 2. 新一轮回看默认读取最近七天全部 `daily/journal/` 与 `daily/inputs/`；
-3. 每次回看都写入 `reviews/{YYYY}/{YYYYMM}/{YYYYMMDD}-weekly-review.md`；
+3. 每次回看都写入 `reviews/{YYYY}/{YYYYMM}/{开始日期}-{结束日期}-{关键词}.md`，同一日期范围已有 Review 时更新原文件；
 4. 返回少量 pattern、连接、变化和 1–3 个问题，不自动生成文章；
 5. 我回答问题后，更新同一份 Review；
 6. 只有我确认要继续时才生成文章草稿；草稿完成后，再确认是否保存及保存位置。

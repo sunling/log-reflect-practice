@@ -25,7 +25,6 @@ description: 回看最近七天或指定范围内的 `daily/journal/` 与 `daily
 
 - 只是保存一条新经历或外部输入：分别使用 `capture-journal` 或 `capture-input`；
 - 只是推荐陌生资源：使用 `bubble-breaker`；
-- 已经明确要把线索变成持续行动：使用 `develop-practice`；
 - 不把每周回看强行写成文章，也不因为出现一个想法就创建 Practice；
 - 不把旧 Review 当作本周新发生的原始证据。
 
@@ -75,10 +74,16 @@ description: 回看最近七天或指定范围内的 `daily/journal/` 与 `daily
 默认路径：
 
 ```text
-reviews/{YYYY}/{YYYYMM}/{YYYYMMDD}-weekly-review.md
+reviews/{YYYY}/{YYYYMM}/{开始日期}-{结束日期}-{关键词}.md
 ```
 
-其中 `YYYYMMDD` 是执行回看的日期。同一天重复运行时更新原文件，不创建重复版本。
+文件名中的两个日期都使用 `YYYYMMDD`：前者是回看范围的开始日期，后者是结束日期；年月目录按结束日期归档。`关键词` 从本次最核心且有证据的线索中提取，使用一个简短、具体、便于识别的词或短语，一般不超过 12 个中英文字符；去掉 `/`、`\` 和换行等不适合文件名的字符，不使用“weekly-review”“回看”“总结”等泛称。例如：
+
+```text
+reviews/2026/202608/20260817-20260823-产出焦虑.md
+```
+
+创建新文件前，先在结束日期对应的月份目录中查找文件名以 `{开始日期}-{结束日期}-` 开头的 Review。已有 1 份时更新原文件并保留原文件名；已有多份时停止并请用户确认，不因后续判断或关键词变化创建重复版本。执行日期继续记录在 frontmatter 的 `date` 字段中。
 
 最小结构：
 
@@ -180,11 +185,11 @@ Weekly Review 是回看档案，不等于 Practice。只有线索已经反复出
 ### Review 存档
 
 1. 通过 GitHub API 读取目标日期范围内的 Journal 与 Input；
-2. 确定 `reviews/{YYYY}/{YYYYMM}/{YYYYMMDD}-weekly-review.md`；
-3. 路径已存在时先完整读取并更新，不覆盖后续回应；
-4. 路径不存在时创建文件；
+2. 使用 `reviews/{YYYY}/{YYYYMM}/{开始日期}-{结束日期}-{关键词}.md`，并按结束日期确定年月目录；
+3. 创建前先查找文件名以 `{开始日期}-{结束日期}-` 开头的 Review：1 份则完整读取并更新，0 份才创建，多份则停止并请用户确认；
+4. 更新原文件时保留原文件名和已有的后续回应；
 5. Review 是定时回看的默认产物，无需每周重复询问是否存档；
-6. 使用清楚的 commit message，例如 `Add weekly review: YYYY-MM-DD` 或 `Update weekly review: YYYY-MM-DD`；
+6. 使用清楚的 commit message，例如 `Add weekly review: YYYY-MM-DD to YYYY-MM-DD` 或 `Update weekly review: YYYY-MM-DD to YYYY-MM-DD`；
 7. 提交成功后返回相对路径与 commit 信息。
 
 ### 后续回应与文章
