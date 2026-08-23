@@ -12,7 +12,6 @@
 2. 如果要写真实日记，建议把新仓库设为 **Private**。
 3. 填写 [PROFILE.md](PROFILE.md)，让 AI 了解你的基本偏好。
 4. 阅读 [AGENTS.md](AGENTS.md)，再从第一条日记或输入开始。
-5. 运行 `python3 scripts/check-system.py`，确认基本结构完整。
 
 如果当前仓库还没有显示 **Use this template**，仓库所有者需要先在 GitHub 的 **Settings → General → Template repository** 中开启它。
 
