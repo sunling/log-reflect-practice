@@ -37,7 +37,7 @@ Journal 与 Input 适合保留独立 Project，方便在手机或网页中随时
 2. **替换配置占位符**：把所选配置文件中的 `YOUR_GITHUB_USERNAME/YOUR_REPOSITORY` 替换为自己的仓库名，例如 `ling/my-recording-system`。
 3. **填写个人偏好**：在根目录 `PROFILE.md` 中填写时区、主要语言和隐私边界。
 4. **连接 GitHub**：在 ChatGPT 中连接并授权 GitHub，先用一条不敏感记录验证读取与写入。
-5. **创建两个长期 Project**：分别把 `new-journal.md` 与 `new-input.md` 复制到对应 Project Instructions。
+5. **创建两个长期 Project**：分别打开 `new-journal.md` 与 `new-input.md`，先把其中的 `YOUR_GITHUB_USERNAME/YOUR_REPOSITORY` 替换为自己的 GitHub 用户名和仓库名，再将完整内容复制到对应的 Project Instructions。
 6. **测试 Weekly Review**：新建一个专用聊天，使用对应 Prompt 手动运行一次，确认能读取两类 Daily 并写入 `reviews/`。
 7. **创建定时任务**：继续在这个聊天中设置执行时间；后续结果会回到同一聊天，方便继续回答问题和发展文章。
 
