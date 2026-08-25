@@ -13,7 +13,28 @@
 ## 使用指南
 
 1. 把所选 Skill 和计划任务中的 `YOUR_GITHUB_USERNAME/YOUR_REPOSITORY` 替换为自己的仓库名。
-2. 为豆包智能体挂载 GitHub 插件或等效代码库能力，并授权目标仓库读写。
-3. 将 `skills/` 中的内容复制到智能体对应技能提示词。
-4. 先用一条不敏感记录验证读取、创建和更新，再建立计划任务。
-5. Weekly Review 的计划任务使用 `scheduled-task-prompt/weekly-review.md`，Review 固定存入独立的 `reviews/`，不写入 Daily。
+2. 为豆包智能体挂载真实的 GitHub MCP / 插件工具，并授权目标仓库读写；Private 仓库需要确认该仓库已包含在授权范围内。
+3. 在复制 Skill 前先做一次真实工具连通测试，确认豆包可以直接调用 GitHub 读取工具，而不是用 bash、`echo`、`curl` 或打印 JSON 模拟调用。
+4. 将 `skills/` 中的内容复制到智能体对应技能提示词。
+5. 先用一条不敏感记录验证读取、创建和更新；三项都成功后再建立计划任务。
+6. Weekly Review 的计划任务使用 `scheduled-task-prompt/weekly-review.md`，Review 固定存入独立的 `reviews/`，不写入 Daily。
+
+### GitHub 工具连通测试
+
+可以先让豆包执行：
+
+```text
+先不要整理或保存记录。
+
+请确认当前会话中是否存在真实可调用的 GitHub 读取工具。
+然后只使用真实的 GitHub MCP / 插件工具读取：
+YOUR_GITHUB_USERNAME/YOUR_REPOSITORY/README.md
+
+禁止使用 bash、shell、echo、curl、Python、JavaScript，
+也不要打印 JSON 或代码来模拟调用。
+
+如果当前没有真实 GitHub 工具，只回复：
+GITHUB_TOOL_UNAVAILABLE
+```
+
+把测试中的占位符换成自己的仓库。只有真实工具返回了仓库文件内容，才算连通成功。`echo` 出请求、展示参数或生成一段“工具调用代码”都不算成功。若返回 `GITHUB_TOOL_UNAVAILABLE`，先检查 MCP / 插件是否已挂载到当前智能体，以及目标仓库的授权范围，不要继续测试记录写入。
