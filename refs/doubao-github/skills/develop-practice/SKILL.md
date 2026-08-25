@@ -112,13 +112,36 @@ practices/{practice-name}/
 
 ## GitHub 执行与存储
 
-AI 对话环境中的本地文件通常是临时的，长期内容必须通过 GitHub API 或已连接的 GitHub 插件写入目标仓库。
+AI 对话环境中的本地文件通常是临时的，Practice 文件必须通过 GitHub API（或已挂载的 GitHub 插件）写入配置的目标仓库。
 
-1. 安装本 Skill 前，将 `YOUR_GITHUB_USERNAME/YOUR_REPOSITORY` 替换为用户自己的仓库；占位符未替换时，读写前必须询问，不能猜测。
-2. 目标路径为 `practices/{practice-name}/mission.md` 与 `practices/{practice-name}/current.md`。
-3. 创建前检查同名或近义目录。更新文件时先读取现有内容和 SHA，不覆盖无关内容。
-4. 新建时使用类似 `feat: add practice {practice-name}` 的 commit message；更新时使用 `docs: update practice {practice-name}`。
-5. 成功后只报告仓库、相对路径和 commit 信息，不重复完整正文。
+### 仓库与分支校验
+
+目标仓库：`YOUR_GITHUB_USERNAME/YOUR_REPOSITORY`
+
+- 安装此 Skill 时，先把占位符替换成用户自己的 `owner/repository`；仍有占位符时，读写前必须询问，不能猜测。
+- 配置后的完整仓库名是唯一事实来源。每次 GitHub 调用都必须使用它，不得从 Daily 路径、模板作者、历史对话或其他项目推断仓库，也不得在失败后改投另一个仓库。
+- 不要假定默认分支叫 `main`。优先省略 `ref` / `branch`；工具要求显式分支时，先读取仓库信息中的 `default_branch`，后续所有读写使用同一分支。
+- 本轮第一次访问 GitHub 时，先验证仓库完整名称、可访问性与默认分支。仓库或分支返回 `404` 时停止，不得将其解释为“还没有 Practice”。
+
+### 创建或更新 Practice
+
+1. 在已验证的仓库和默认分支中检查 `practices/` 下的同名或近义目录，避免重复创建。
+2. 目标文件为 `practices/{practice-name}/mission.md` 与 `practices/{practice-name}/current.md`。
+3. 更新已有文件时，先完整读取原文和当前 SHA，只修改本轮需要调整的内容，不覆盖无关信息。
+4. 新建时使用类似 `feat: add practice {practice-name}`，更新时使用 `docs: update practice {practice-name}`。
+5. 每个预期写入的文件都必须取得明确的成功结果。只有 GitHub 返回 commit SHA、commit URL 或等价结果后，才可以说该文件已成功提交；若结果含糊，重新读取目标路径确认。
+6. 多文件写入时逐项确认；若一个文件成功、另一个失败，必须报告部分完成状态，不得笼统说“Practice 已创建”。
+
+### 错误处理与真实反馈
+
+- 只有仓库与默认分支已验证成功后，`practices/` 目录或目标文件的 `404` 才能解释为尚不存在。
+- 仓库或分支 `404`：停止，请用户核对仓库名、GitHub 插件连接及目标仓库授权；Private 仓库尤其需要明确授权。
+- 写入 `403` / `404`：明确说明哪些文件“尚未写入 GitHub”，不得尝试其他仓库或声称成功。
+- SHA 过期或写入冲突：重新读取最新文件，合并本轮修改后最多重试一次；仍失败则停止。
+- 当前环境不能写入时，返回目标路径和完整待写入内容，明确说明需要手动保存或补充权限。
+- 任何失败都不得提交到模板仓库、作者仓库或历史对话中的其他仓库。
+
+成功后只报告仓库、相对路径和 commit 信息，不重复完整正文。
 
 ## 隐私与事实边界
 
