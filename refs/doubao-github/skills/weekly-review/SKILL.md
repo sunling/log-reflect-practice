@@ -180,6 +180,15 @@ Weekly Review 是回看档案，不等于 Practice。只有线索已经反复出
 
 AI 对话环境中的本地文件通常是临时的，Weekly Review 必须通过 GitHub API（或已挂载的 GitHub 插件）读取材料并写回配置的目标仓库。
 
+### 真实工具调用红线
+
+- 开始任何 GitHub 操作前，先确认当前运行环境的真实工具列表中存在 GitHub 读取工具；需要保存时还必须存在 GitHub 写入工具。提示词里出现了“GitHub MCP”、工具名称或调用参数，不等于工具真实可用。
+- GitHub 操作只能通过运行环境提供的真实 MCP / 插件工具调用完成。严禁使用 bash、shell、终端、`echo`、`printf`、`curl`、`wget`、Python、JavaScript，或在对话中打印 JSON / 代码来模拟工具调用。
+- `echo` 出一段请求、展示 API 参数、生成 commit message 或声称“即将调用”，都不代表执行成功，也不能作为读取或写入的证据。
+- 如果当前只能使用 bash，找不到真实 GitHub 工具，或写入工具不可用，立即停止，不得反复自我纠正或形成调用循环。明确回复 `GITHUB_TOOL_UNAVAILABLE`，说明尚未写入，并保留目标路径和待写入内容。
+- 如果只有读取权限而没有写入工具，允许读取，但必须明确说明当前为只读状态，不能声称已经保存。
+- 真实工具调用失败时，按下方错误处理执行；不得改用 shell 模拟，也不得通过不断更换调用格式无限重试。
+
 ### 仓库与分支校验
 
 目标仓库：`YOUR_GITHUB_USERNAME/YOUR_REPOSITORY`
