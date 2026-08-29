@@ -16,7 +16,7 @@
 | `capture-input` | 长期 Project | [new-input.md](project-settings/new-input.md) |
 | `weekly-review` | 专用聊天中的定时任务 | [weekly-review.md](scheduled-task-prompt/weekly-review.md) |
 | `bubble-breaker` | 定时任务 | [break-bubble.md](scheduled-task-prompt/break-bubble.md) |
-| `develop-article` | 长期 Project（文章工作台） | [new-article.md](project-settings/new-article.md) |
+| `new-article` | 长期 Project（文章工作台） | [new-article.md](project-settings/new-article.md) |
 | `develop-practice` | 需要时调用 | 直接读取仓库中的 `.agents/skills/develop-practice/SKILL.md` |
 
 六个 Skill 是六条完整工作流，不需要对应六个 Project。

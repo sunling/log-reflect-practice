@@ -56,7 +56,7 @@ practices/{practice-name}/
 
 目录名使用小写英文和连字符，不使用空格、`v2` 或 `final`。
 
-如果这是会持续产生文章的输出练习，仍先建立 `mission.md` 和 `current.md`；第一篇文章开始起草时，再由 `develop-article` 增加 `drafts/` 并管理其中草稿。单篇文章主题不能替代 Practice 名称。
+如果这是会持续产生文章的输出练习，仍先建立 `mission.md` 和 `current.md`；第一篇文章开始起草时，再由 `new-article` 增加 `drafts/` 并管理其中草稿。单篇文章主题不能替代 Practice 名称。
 
 ### `mission.md`
 

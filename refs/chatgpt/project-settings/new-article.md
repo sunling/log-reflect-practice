@@ -30,13 +30,13 @@ Output Practice name：
 
 `YOUR_OUTPUT_PRACTICE_NAME`
 
-Develop Article Skill path：
+New Article Skill path：
 
-`.agents/skills/develop-article/SKILL.md`
+`.agents/skills/new-article/SKILL.md`
 
-Develop Article Skill URL：
+New Article Skill URL：
 
-`https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY/blob/main/.agents/skills/develop-article/SKILL.md`
+`https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY/blob/main/.agents/skills/new-article/SKILL.md`
 
 Weekly Review Skill path：
 
