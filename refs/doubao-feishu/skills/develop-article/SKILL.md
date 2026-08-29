@@ -93,13 +93,98 @@ Grill Me 是首稿前可选的深入追问模式。使用者明确说“Grill me
 
 首次保存时包含工作标题、草稿正文、仍需确认的 0–3 处内容，以及实际使用过的 Review / Daily 路径；没有待确认项或来源时省略相应部分。后续收到“继续打磨”“改一下开头”等请求时，先读取同一草稿，只修改用户要求的部分，并保留尚未解决的问题。根据实际进度简要更新 Practice 的 `current.md`，但不要每次重写 `mission.md`。除非使用者明确要求且目标无歧义，否则不向任何平台发布。
 
-## 飞书材料与保存
+## 飞书 Drive 执行与存储（重要）
 
-- 使用相关 Daily 或 Review 前，先确认当前环境存在真实可调用的飞书云盘工具；没有工具时不要假装已经读取，可以请使用者直接提供材料；
-- 只读取与选定主题直接相关的文件，不为了丰富文章扫描全部云盘；
-- 首稿完成后默认定位或创建 `practices/<输出练习名>/drafts/YYYYMMDD-文章主题.md`；飞书允许同名文件夹并存，每一层都要完整列出父目录子项并精确匹配：1 个则复用，0 个才创建，多个则停止并消歧；
-- 更新已有文件时使用原 file token，上传成功后返回文件名和链接；
-- 上传失败时明确说明尚未持久化，不创建重复副本，也不改投其他目录。
+豆包 / AI 环境中的本地文件通常是临时的。写入本地文件后必须上传到飞书 Drive 才算持久化；绝不能只创建本地 Markdown 就回复“已保存”。
+
+使用相关 Daily 或 Review 前，先确认当前环境存在真实可调用的飞书云盘工具。没有工具时不要假装已经读取，可以请使用者直接提供材料。只读取与选定主题直接相关的文件，不为了丰富文章扫描全部云盘。
+
+### 1. 定位已经立项的输出 Practice
+
+先搜索目标系统中的 `practices` 根目录：
+
+```bash
+lark-cli drive +search --query "practices" --doc-types folder --format json
+```
+
+- 搜索到多个同名 `practices` 时，根据父目录、既有配置或已知 file token 消歧；无法确定时让使用者选择，不再创建一个根目录；
+- 找到目标 `practices` 后，列出全部子项。若响应还有下一页，继续分页直到列完：
+
+```bash
+lark-cli drive files list --params '{"folder_token":"{practices文件夹token}","page_size":200}' --format json
+```
+
+在 `data.files` 中精确筛选 `type == "folder"` 且 `name == "{输出练习名}"`：
+
+- 找到 1 个 → 复用其 token；
+- 找到 0 个 → 不创建空目录，先按 `develop-practice` 完成立项并上传 `mission.md` 与 `current.md`；
+- 找到多个 → 停止创建，根据 `mission.md`、`current.md` 或既有 token 消歧；仍无法判断时让使用者选择。
+
+### 2. 定位或创建唯一的 `drafts`
+
+列出输出 Practice 的全部子项：
+
+```bash
+lark-cli drive files list --params '{"folder_token":"{输出练习文件夹token}","page_size":200}' --format json
+```
+
+完整处理分页后，精确筛选 `type == "folder"` 且 `name == "drafts"`：
+
+- 找到 1 个 → 复用其 token；
+- 找到 0 个 → 只有此时才创建：
+
+  ```bash
+  lark-cli drive +create-folder --name "drafts" --folder-token "{输出练习文件夹token}"
+  ```
+
+- 找到多个 → 不再创建；优先使用已有 Practice 文件明确关联的 token，否则让使用者选择。
+
+飞书允许同名文件夹并存。每一层都必须先查后建，不能因为第一次搜索没有命中就直接执行 `create-folder`。
+
+### 3. 新建或更新草稿
+
+先列出 `drafts` 的全部子项并处理完整分页，检查是否已有同一主题草稿：
+
+```bash
+lark-cli drive files list --params '{"folder_token":"{drafts文件夹token}","page_size":200}' --format json
+```
+
+- 找到 1 个同主题草稿 → 使用原文件名和 `file_token` 更新；
+- 找到 0 个 → 使用首次起草日期创建 `YYYYMMDD-文章主题.md`；
+- 找到多个 → 不再创建新文件，先让使用者确认需要继续哪一个。
+
+新建时：
+
+1. 在本地工作目录准备相对路径文件 `./YYYYMMDD-文章主题.md`；
+2. 上传到唯一的 `drafts` 文件夹；
+3. 保存返回的 `file_token` 和 URL。
+
+```bash
+lark-cli drive +upload --file ./YYYYMMDD-文章主题.md --folder-token "{drafts文件夹token}"
+```
+
+更新时：
+
+1. 使用原 `file_token` 下载现有草稿到相对路径；
+2. 在本地修改完整文件；
+3. 使用同一个 `file_token` 覆盖上传，保留原文件名和链接。
+
+```bash
+lark-cli drive +download --file-token "{已有草稿的file_token}" --output ./YYYYMMDD-文章主题.md
+lark-cli drive +upload --file ./YYYYMMDD-文章主题.md --file-token "{已有草稿的file_token}"
+```
+
+`--file` 和 `--output` 必须使用相对路径，不能使用绝对路径，否则可能触发 `unsafe file path`。
+
+### 4. 更新 Practice 当前进度
+
+只有本轮确实改变了输出练习的当前进度时，才更新同一 Practice 中已有的 `current.md`：先下载原文件，只修改必要段落，再用原 `file_token` 覆盖上传。不要新建第二个 `current.md`，也不要因为一篇文章改写长期 `mission.md`。
+
+### 5. 成功与失败反馈
+
+- 只有上传接口返回 `file_token`、URL 或等价成功结果后，才可以说草稿已经保存；
+- 成功后返回飞书中的 Practice 名、草稿文件名、文件链接，以及本轮是新建还是更新；
+- 上传失败时明确说明尚未持久化，返回建议路径和完整 Markdown；不要创建重复副本、改投其他目录或把临时本地路径当作交付结果。
 
 ## 完成检查
 
@@ -114,4 +199,6 @@ Grill Me 是首稿前可选的深入追问模式。使用者明确说“Grill me
 - 是否在起草前确认了主线，或按使用者要求跳过 Grill Me？
 - 草稿是否归入了真正的输出练习，而不是用文章主题临时冒充 Practice 名称？
 - 是否创建或更新了同一篇草稿，而不是制造重复版本？
+- 是否已把草稿上传到飞书 Drive，而不是只保存在临时本地文件？
+- 是否复用了原 file token，避免重复文件和链接变化？
 - 是否只保存和发布了使用者真正要求的结果？
