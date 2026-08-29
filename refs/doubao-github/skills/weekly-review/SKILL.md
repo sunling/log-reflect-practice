@@ -25,7 +25,7 @@ Weekly Review 到发现方向为止，不在同一流程中起草文章。
 
 - 只是保存一条新经历或外部输入：分别使用 `capture-journal` 或 `capture-input`；
 - 只是推荐陌生资源：使用 `bubble-breaker`；
-- 已经选定主题并确认要写文章：使用 `develop-article`；
+- 已经选定主题并确认要写文章：使用 `new-article`；
 - 不把每周回看强行写成文章，也不因为出现一个想法就创建 Practice；
 - 不把旧 Review 当作本周新发生的原始证据。
 
@@ -136,8 +136,8 @@ type: weekly-review
 
 - Weekly Review 可以根据本周反复出现的注意力、真实行动和输入连接，提出 0–2 个候选输出方向；
 - 候选方向不是写作任务，也不代表每周必须输出；
-- 只有使用者选择一个主题并明确想继续写时，才交给 `develop-article`；
-- `develop-article` 负责围绕真实行动、个人关联和具体细节逐个追问，再整理文章草稿；Weekly Review 本身不生成文章。
+- 只有使用者选择一个主题并明确想继续写时，才交给 `new-article`；
+- `new-article` 负责召回相关素材、逐个追问和整理文章草稿；Weekly Review 本身不生成文章。
 
 ## 与 Practice 的关系
 
@@ -196,7 +196,7 @@ AI 对话环境中的本地文件通常是临时的，Weekly Review 必须通过
 ### 后续回应与输出方向
 
 - 用户回答问题时，读取最新文件与 SHA，更新同一 Review。
-- 用户选择一个主题并确认要写时，改用 `develop-article`；Weekly Review 不创建文章文件。
+- 用户选择一个主题并确认要写时，改用 `new-article`；Weekly Review 不创建文章文件。
 - 多文件写入时逐项确认；若只有部分成功，必须报告具体成功与失败的文件，不得笼统说“全部完成”。
 
 ### 错误处理与真实反馈

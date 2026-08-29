@@ -25,6 +25,7 @@ Daily 中出现线索
 - 只有一个刚出现的念头，没有行动或反馈：先留在 Daily；
 - 只是要保存一条经历或输入：分别使用 `capture-journal` 或 `capture-input`；
 - 只是想回看最近记录：先使用 `weekly-review`；
+- 已经有输出练习，只是围绕选定主题追问、写作或继续修改草稿：使用 `new-article`；
 - 一次性待办：直接行动，不必建立 Practice。
 
 ## 开始前读取
@@ -73,7 +74,8 @@ practices/<实践名>/
 ```text
 practices/<实践名>/
 ├── mission.md
-└── current.md
+├── current.md
+└── drafts/      # 只有输出练习开始产生文章时才增加
 ```
 
 `mission.md` 建议结构：
@@ -111,6 +113,8 @@ practices/<实践名>/
 ```
 
 只保留有真实材料的部分，不用空话填满模板。
+
+如果这是会持续产生文章的输出练习，仍先建立 `mission.md` 和 `current.md`；第一篇文章开始起草时，再由 `new-article` 增加 `drafts/` 并管理其中草稿。单篇文章主题不能替代 Practice 名称。
 
 ### 3. 保留来源关系
 
