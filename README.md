@@ -49,7 +49,7 @@
 - [capture-journal](.agents/skills/capture-journal/SKILL.md)：把一段经历整理成 journal，但不替你编造解释。
 - [capture-input](.agents/skills/capture-input/SKILL.md)：保存外部输入，同时区分原内容与你的回应。
 - [weekly-review](.agents/skills/weekly-review/SKILL.md)：回看最近七天、保存回看档案、提出问题，并发现少量候选输出方向。
-- [develop-article](.agents/skills/develop-article/SKILL.md)：用 Grill Me 问清选定主题，生成并持续更新文章草稿。
+- [develop-article](.agents/skills/develop-article/SKILL.md)：围绕选定主题跨时间召回相关素材，再用 Grill Me 问清表达并持续更新文章草稿。
 - [develop-practice](.agents/skills/develop-practice/SKILL.md)：把有证据的线索发展为可持续的小实践。
 - [bubble-breaker](.agents/skills/bubble-breaker/SKILL.md)：每次引入一个陌生而具体的世界输入，完成之后再留下记录。
 

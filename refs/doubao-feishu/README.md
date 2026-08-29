@@ -8,7 +8,7 @@
 - `capture-input`：保存文章、播客、书、视频和对话等外部输入，写入 `daily/inputs/`。
 - `bubble-breaker`：发现一个陌生资源，完成后留下轻量记录。
 - `weekly-review`：读取最近七天两类 Daily，保存 Review、提出问题，并发现少量候选输出方向。
-- `develop-article`：用 Grill Me 问清选定主题，并把草稿持续更新在已立项输出练习的 `drafts/` 中。
+- `develop-article`：跨时间召回选定主题的相关素材，再用 Grill Me 问清表达，并把草稿持续更新在已立项输出练习的 `drafts/` 中。
 - `develop-practice`：把有重复、行动或反馈证据的线索发展为持续 Practice。
 
 ## 使用指南

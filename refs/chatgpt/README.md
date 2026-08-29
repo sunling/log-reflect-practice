@@ -47,6 +47,6 @@ Journal、Input 与 Article Workshop 适合保留独立 Project：前两个接�
 5. **测试记录入口**：在 Journal 或 Input Project 中保存一条不敏感的测试记录，确认 GitHub 读取与写入都能工作。
 6. **测试 Weekly Review**：新建一个专用聊天，先手动要求 ChatGPT 读取你仓库中的 `.agents/skills/weekly-review/SKILL.md` 并执行一次第一阶段，不创建定时任务；确认它能读取两类 Daily 并写入 `reviews/`。
 7. **创建定时任务**：先查看 [`scheduled-task-prompt/README.md`](scheduled-task-prompt/README.md) 选择任务。打开对应 Prompt，复制原始 Markdown 并粘贴到刚才的专用聊天，将 `YOUR_GITHUB_USERNAME/YOUR_REPOSITORY` 替换为自己的仓库，再设置执行时间。后续结果会回到同一聊天，方便继续回答问题和选择输出方向。
-8. **测试文章工作台**：选定一个主题，或提供一次 Weekly Review 中的候选方向，在“文章工作台”中使用 Grill Me 逐个问清表达，再生成第一版草稿。草稿默认写入 `practices/<输出练习名>/drafts/`，以后继续更新同一文件；不会自动发布。
+8. **测试文章工作台**：选定一个主题，或提供一次 Weekly Review 中的候选方向。先自由补充自己想到的经历，让文章工作台跨时间检索相关 Journal、Inputs 与 Reviews，并整理主题素材地图；确认和补充后，再用 Grill Me 逐个问清表达并生成第一版草稿。草稿默认写入 `practices/<输出练习名>/drafts/`，以后继续更新同一文件；不会自动发布。
 
 Project Instructions 负责 Journal、Input 与 Article Workshop 的长期入口；Scheduled Task Prompt 负责定期触发；具体规则始终以 `.agents/skills/` 为准。
