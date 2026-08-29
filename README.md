@@ -4,7 +4,7 @@
 
 > 生活与输入 → Daily → Weekly Review → Practice → 反馈
 
-仓库里没有作者的私人记录，只有结构、说明、虚构样例，以及 5 个可修改的仓库内 Skill。你可以把它用于个人记录，也可以在“从记录到实践”工作坊中跟着搭建。
+仓库里没有作者的私人记录，只有结构、说明、虚构样例，以及 6 个可修改的仓库内 Skill。你可以把它用于个人记录，也可以在“从记录到实践”工作坊中跟着搭建。
 
 ## 开始使用
 
@@ -44,11 +44,12 @@
 └── AGENTS.md
 ```
 
-## 五个示例 Skill
+## 六个示例 Skill
 
 - [capture-journal](.agents/skills/capture-journal/SKILL.md)：把一段经历整理成 journal，但不替你编造解释。
 - [capture-input](.agents/skills/capture-input/SKILL.md)：保存外部输入，同时区分原内容与你的回应。
-- [weekly-review](.agents/skills/weekly-review/SKILL.md)：回看最近七天、保存回看档案、提出问题，并在确认后把线索发展成文章。
+- [weekly-review](.agents/skills/weekly-review/SKILL.md)：回看最近七天、保存回看档案、提出问题，并发现少量候选输出方向。
+- [develop-article](.agents/skills/develop-article/SKILL.md)：把已经选定的主题通过逐个追问发展成一篇简单文章。
 - [develop-practice](.agents/skills/develop-practice/SKILL.md)：把有证据的线索发展为可持续的小实践。
 - [bubble-breaker](.agents/skills/bubble-breaker/SKILL.md)：每次引入一个陌生而具体的世界输入，完成之后再留下记录。
 
