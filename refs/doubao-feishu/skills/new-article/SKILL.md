@@ -54,11 +54,48 @@ description: 把使用者已经选定的主题发展成一篇可持续修改的�
 
 - 使用者已经指定输出练习或草稿路径：读取该 Practice 的 `mission.md`、`current.md` 和相关草稿；
 - 使用者没有指定：直接查找并复用 `practices/weekly-writing/`，不要再询问练习名称；
-- `weekly-writing` 尚未立项：按 `develop-practice` 的最小结构建立 `mission.md` 和 `current.md`，只写入当前请求已经确认的事实，不为填满模板编造节奏、受众或反馈方式；
-- 使用者指定了其他尚未立项的练习：再确认为什么练、当前节奏与反馈方式，然后建立最小结构；
+- `weekly-writing` 尚未立项：直接按下面的最小结构建立 `mission.md` 和 `current.md`，不依赖另一个 Skill，也不要求使用者先提供更多配置；
+- 使用者指定了其他尚未立项的练习：确认必要事实后，使用同一最小结构建立；
 - 同名目录存在多个或使用者给出的路径有歧义：先请使用者确认，不创建重复 Practice。
 
 首次立项完成后，后续文章默认复用同一个输出练习，除非使用者明确更换。
+
+### 默认 Practice 的最小结构
+
+首次创建 `weekly-writing` 时，直接使用当前已经选定的文章主题初始化，不另外追问练习名、固定周期、受众或反馈方式。只保留有真实内容的字段：
+
+`mission.md`：
+
+```md
+# 每周写作
+
+## 为什么存在
+把已经选定的主题发展成可以持续修改的文章，让记录逐渐变成自己的表达。
+
+## 做什么
+围绕一个主题召回相关经历和输入，问清主线，形成并继续打磨草稿。
+
+## 不做什么
+- 不要求每篇文章都公开；
+- 不为了完成频率而编造内容或强行下结论。
+```
+
+`current.md`：
+
+```md
+# 当前一轮
+
+## 当前主题
+{使用者已经选定的文章主题}
+
+## 当前动作
+召回相关素材，确认表达主线，完成并继续打磨同一篇草稿。
+
+## 草稿位置
+drafts/YYYYMMDD-文章主题.md
+```
+
+这是输出练习的最小初始化，不代表使用者已经承诺固定发表频率。使用者后续提供了更具体的使命、节奏或反馈方式时，再更新对应文件。
 
 ## 先召回和整理主题素材
 
@@ -151,6 +188,7 @@ Grill Me 是素材地图之后可选的深入追问模式。使用者明确说�
 lark-cli drive +search --query "practices" --doc-types folder --format json
 ```
 
+- 找到 0 个 `practices`：只有在记录系统根目录已经明确时，才在该根目录下创建；无法确定父目录时让使用者选择，不要把它建在任意位置；
 - 搜索到多个同名 `practices` 时，根据父目录、既有配置或已知 file token 消歧；无法确定时让使用者选择，不再创建一个根目录；
 - 找到目标 `practices` 后，列出全部子项。若响应还有下一页，继续分页直到列完：
 
@@ -161,8 +199,18 @@ lark-cli drive files list --params '{"folder_token":"{practices文件夹token}",
 使用者没有提供输出练习名时，先把 `{输出练习名}` 设为 `weekly-writing`。在 `data.files` 中精确筛选 `type == "folder"` 且 `name == "{输出练习名}"`：
 
 - 找到 1 个 → 复用其 token；
-- 找到 0 个 → 按“先确认输出练习”的规则完成最小立项并上传 `mission.md` 与 `current.md`，不要只创建空目录；
+- 找到 0 个 → 按“默认 Practice 的最小结构”准备 `mission.md` 与 `current.md`，创建 Practice 目录并上传两个文件；不要只创建空目录；
 - 找到多个 → 停止创建，根据 `mission.md`、`current.md` 或既有 token 消歧；仍无法判断时让使用者选择。
+
+只有精确匹配数量为 0 时，才执行初始化。`--file` 使用相对路径：
+
+```bash
+lark-cli drive +create-folder --name "{输出练习名}" --folder-token "{practices文件夹token}"
+lark-cli drive +upload --file ./mission.md --folder-token "{输出练习文件夹token}"
+lark-cli drive +upload --file ./current.md --folder-token "{输出练习文件夹token}"
+```
+
+保存三个接口返回的目录 token、文件 token 和链接。任一步失败都不继续创建 `drafts`，并明确说明默认 Practice 尚未完成初始化。
 
 ### 2. 定位或创建唯一的 `drafts`
 

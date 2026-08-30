@@ -1,6 +1,6 @@
 # Doubao + Feishu 环境配置库
 
-本目录为主仓库六个核心工作流提供豆包 + 飞书变体。记录与回看通过飞书云盘插件持久化。
+本目录为主仓库六个核心工作流提供豆包 + 飞书变体。豆包不依赖 ChatGPT Project；先把需要的 Skill 完整安装到智能体，再在普通对话中调用 Skill，通过飞书云盘插件读取和持久化文件。
 
 ## 包含的 Skills
 
@@ -14,8 +14,9 @@
 ## 使用指南
 
 1. 为豆包智能体挂载支持文件操作的飞书插件，并完成认证授权。
-2. 在飞书云盘准备 `daily/journal/`、`daily/inputs/`、`reviews/` 与 `practices/`，或允许 Bot 首次使用时创建。
-3. 将 `skills/` 中的内容复制到智能体对应技能提示词。
-4. 先用一条不敏感记录验证读取、创建和更新，再建立计划任务。
-5. 计划任务的用途、选择和复制方式见 [`scheduled-task-prompt/README.md`](scheduled-task-prompt/README.md)；建立任务前先手动运行一次。
-6. 飞书允许同名文件夹并存。任何 Skill 创建目录前都必须完整列出父目录子项并精确匹配名称：1 个则复用，0 个才创建，多个则停止并消歧。
+2. 把准备使用的 `skills/<skill-name>/SKILL.md` 完整安装为豆包 Skill。不要改用 ChatGPT 的 Project Setting；豆包没有这层入口。
+3. 在飞书云盘准备 `daily/journal/`、`daily/inputs/`、`reviews/` 与 `practices/`，或允许 Bot 首次使用时创建。
+4. 在普通对话中明确调用已安装的 Skill。例如 Demo 文章流程时，调用 `new-article` 并提供一个已经选定的主题；后续读取、追问和飞书写入都由该 Skill 决定。
+5. 先用一条不敏感内容测试：确认 Skill 能列出目标飞书目录、读取相关文件，并把结果上传回正确目录。只有返回真实飞书链接才算通道成功。
+6. 计划任务的用途、选择和复制方式见 [`scheduled-task-prompt/README.md`](scheduled-task-prompt/README.md)；建立任务前先手动运行一次。
+7. 飞书允许同名文件夹并存。任何 Skill 创建目录前都必须完整列出父目录子项并精确匹配名称：1 个则复用，0 个才创建，多个则停止并消歧。
